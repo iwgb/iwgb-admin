@@ -1,0 +1,17 @@
+@charset "utf-8";
+
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;700&display=swap');
+
+$theme-colors: (
+  "secondary": #962d22,
+);
+
+@import "~bootstrap/scss/bootstrap";
+
+body {
+  font-family: 'Fira Sans', Helvetica Neue, Verdana, sans-serif;
+}
+
+:global .disabled {
+  cursor: not-allowed;
+}
