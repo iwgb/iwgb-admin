@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/react-hooks';
-import SorterResults from '../../service/sorterResults.service';
+import SorterResults from '../../gql/sorterResults';
 import JobTypes from '../../service/jobTypes.service';
 import Plans from '../../service/plans.service';
 import SorterResult from '../SorterResult/SorterResult';

@@ -5,7 +5,7 @@ import SlideDown from 'react-slidedown';
 import { Card, CardBody } from 'reactstrap';
 import { isEqual } from 'lodash';
 import { toast } from 'react-toastify';
-import SorterResults from '../../service/sorterResults.service';
+import SorterResults from '../../gql/sorterResults';
 import SorterResultCardHeader from './CardHeader/SorterResultCardHeader';
 import Select from '../Select/Select';
 import SelectQuestionAndConditional from './SelectQuestionAndConditional';

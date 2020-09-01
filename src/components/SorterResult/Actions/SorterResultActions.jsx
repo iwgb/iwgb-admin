@@ -6,7 +6,7 @@ import { faCheck, faQuestionCircle, faTrash } from '@fortawesome/free-solid-svg-
 import { useMutation } from '@apollo/react-hooks';
 import { toast } from 'react-toastify';
 import styles from './SorterResultActions.module.scss';
-import SorterResults from '../../../service/sorterResults.service';
+import SorterResults from '../../../gql/sorterResults';
 
 const SorterResultActions = ({ id, canSave, onSave }) => {
   const [confirmTimer, setConfirmTimer] = useState(0);
