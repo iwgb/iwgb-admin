@@ -1,13 +1,8 @@
-import { GraphQLClient } from 'graphql-request';
-import { API_BASE_URL, REQUEST_CONFIG } from '../constants/api.constants';
+/* eslint-disable no-underscore-dangle */
+import gql from 'graphql-tag';
 
-const graphql = new GraphQLClient(
-  `${API_BASE_URL}/graphql`,
-  REQUEST_CONFIG
-);
-
-const getAll = () => graphql.request(`
-  {
+const getAll = gql`
+    {
     sorterResults(sorting: {
       field: friendlyName,
       order: ASC,
@@ -20,29 +15,9 @@ const getAll = () => graphql.request(`
       plan
     }
   }
-`);
+`;
 
-const get = (id) => graphql.request(`
-  query ($id: ID) {
-    sorterResults(id: $id) {
-      identifier
-      friendlyName
-      form
-      question
-      conditional
-      plan
-    }
-  }
-`, { id });
-
-const update = ({
-  identifier,
-  friendlyName,
-  form,
-  question,
-  conditional,
-  plan,
-}) => new Promise((resolve, reject) => graphql.request(`
+const update = gql`
   mutation (
     $id: ID!,
     $friendlyName: String,
@@ -58,31 +33,25 @@ const update = ({
       conditional: $conditional,
       plan: $plan,
     }) {
-      identifier
+      identifier,
+      friendlyName,
+      form,
+      question,
+      conditional,
+      plan,
     }
   }
-`, {
-  id: identifier,
-  friendlyName,
-  form,
-  question,
-  conditional,
-  plan,
-})
-  .then((response) => resolve(response))
-  .catch((error) => reject(error))
-);
+`;
 
-const remove = (id) => graphql.request(`
-  mutation (
+const remove = gql`
+   mutation (
     $id: ID!,
   ) {
     deleteSorterResult(id: $id)
   }
-`, { id });
+`;
 
 export default {
-  get,
   getAll,
   update,
   remove,

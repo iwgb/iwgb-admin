@@ -1,86 +1,43 @@
-import React from 'react';
-import SorterResult from '../SorterResult/SorterResult';
+import React, { useState, useEffect } from 'react';
+import { useQuery } from '@apollo/react-hooks';
 import SorterResults from '../../service/sorterResults.service';
 import JobTypes from '../../service/jobTypes.service';
 import Plans from '../../service/plans.service';
+import SorterResult from '../SorterResult/SorterResult';
 
-class SorterResultList extends React.Component {
-  constructor(props) {
-    super(props);
+const SorterResultList = () => {
+  const [plans, setPlans] = useState([]);
+  const [jobTypes, setJobTypes] = useState([]);
 
-    this.state = {
-      sorterResults: [],
-      jobTypes: [],
-      plans: [],
-      saving: '',
-    };
-  }
-
-  componentDidMount() {
-    this.updateSorterResults();
+  useEffect(() => {
     JobTypes.getAll()
-      .then(({ data: { items: jobTypes } }) => this.setState({ jobTypes }));
+      .then(({ data: { items } }) => setJobTypes(items));
     Plans.getAll()
-      .then(({ data: plans }) => this.setState({ plans }));
+      .then(({ data }) => setPlans(data));
+  }, []);
+
+  const { loading, error, data: { sorterResults = [] } = {} } = useQuery(SorterResults.getAll);
+
+  if (loading) {
+    return 'Loading';
+  }
+  if (error) {
+    return 'Error';
   }
 
-  updateSorterResults = () => {
-    SorterResults.getAll()
-      .then(({ sorterResults }) => this.setState({
-        sorterResults,
-        saving: '',
-      }));
-  }
-
-  onSave = (identifier) => ({
-    friendlyName,
-    form,
-    question,
-    conditional,
-    plan,
-  }) => {
-    this.setState({ saving: identifier });
-    SorterResults.update({
-      identifier,
-      friendlyName,
-      form,
-      question,
-      conditional,
-      plan,
-    }).then(() => this.updateSorterResults());
-  };
-
-  onDelete = (identifier) => () => {
-    const { sorterResults } = this.state;
-    SorterResults.remove(identifier)
-      .then(() => this.setState({
-        sorterResults: sorterResults.filter(
-          ({ identifier: sorterResultId }) => sorterResultId !== identifier
-        ),
-      }));
-  };
-
-  render() {
-    const {
-      sorterResults, jobTypes, plans, saving,
-    } = this.state;
-    return (
-      <div>
-        { sorterResults.map((sorterResult) => (
-          <span key={sorterResult.identifier}>
-            <SorterResult
-              sorterResult={sorterResult}
-              jobTypes={jobTypes}
-              plans={plans}
-              onSave={this.onSave(sorterResult.identifier)}
-              onDelete={this.onDelete(sorterResult.identifier)}
-              isSaving={saving === sorterResult.identifier}
-            />
-          </span>
-        ))}
-      </div>
-    );
-  }
-}
+  return (
+    <div>
+      { sorterResults.map((sorterResult) => (
+        <span key={sorterResult.identifier}>
+          <SorterResult
+            sorterResult={sorterResult}
+            jobTypes={jobTypes}
+            plans={plans}
+          />
+        </span>
+      ))}
+    </div>
+  );
+};
 
 export default SorterResultList;
