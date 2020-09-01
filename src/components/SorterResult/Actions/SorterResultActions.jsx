@@ -10,7 +10,20 @@ import SorterResults from '../../../gql/sorterResults';
 
 const SorterResultActions = ({ id, canSave, onSave }) => {
   const [confirmTimer, setConfirmTimer] = useState(0);
-  const [deleteSorterResult] = useMutation(SorterResults.remove);
+
+  const [deleteSorterResult] = useMutation(SorterResults.remove, {
+    update: (cache) => {
+      cache.writeQuery({
+        query: SorterResults.getAll,
+        data: {
+          sorterResults: cache
+            .readQuery({ query: SorterResults.getAll })
+            .sorterResults
+            .filter(({ identifier }) => identifier !== id),
+        },
+      });
+    },
+  });
 
   const onDeleteClick = () => {
     if (confirmTimer !== 0) {

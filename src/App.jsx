@@ -15,7 +15,7 @@ const client = new ApolloClient({
   },
   cache: new InMemoryCache({
     typePolicies: {
-      sorterResult: {
+      SorterResult: {
         keyFields: ['identifier'],
       },
     },

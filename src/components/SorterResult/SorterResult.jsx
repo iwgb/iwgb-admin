@@ -14,7 +14,6 @@ import 'react-slidedown/lib/slidedown.css';
 const SorterResult = ({
   sorterResult, sorterResult: { identifier }, jobTypes, plans,
 }) => {
-  const [updateSorterResult] = useMutation(SorterResults.update);
   const [originalState, setOriginalState] = useState({});
   const [isOpen, setOpen] = useState(false);
 
@@ -23,6 +22,8 @@ const SorterResult = ({
   const [question, setQuestion] = useState(sorterResult.question);
   const [conditional, setConditional] = useState(sorterResult.conditional);
   const [plan, setPlan] = useState(sorterResult.plan);
+
+  const [updateSorterResult] = useMutation(SorterResults.update);
 
   const onHeaderClick = () => {
     setOpen(!isOpen);
@@ -58,9 +59,6 @@ const SorterResult = ({
         id: identifier,
       },
     })
-      .then(({ data: { updateSorterResult: [data] } }) => {
-        setOriginalStateWithAllowedKeys(data);
-      })
       .catch(() => toast(`Could not save your changes to ${friendlyName}`));
   };
 

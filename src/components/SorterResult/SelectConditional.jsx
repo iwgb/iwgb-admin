@@ -9,6 +9,7 @@ const SelectConditional = ({
 
   useEffect(() => {
     if (question === undefined) {
+      setAnswers([]);
       return;
     }
 
