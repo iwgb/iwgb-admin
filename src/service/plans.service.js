@@ -1,7 +1,6 @@
-import http from 'axios';
-import { API_BASE_URL, REQUEST_CONFIG } from '../constants/api.constants';
+import http from '../helpers/axios';
 
-const getAll = () => http.get(`${API_BASE_URL}/plans`, REQUEST_CONFIG);
+const getAll = () => http.get('/plans');
 
 export default {
   getAll,
