@@ -2,17 +2,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
-import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { faChevronRight, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import styles from './SorterResultCardHeader.module.scss';
 import SorterResultActions from '../Actions/SorterResultActions';
 
 const SorterResultCardHeader = ({
-  id, isOpen, onClick, title, canSave, onNameChange, onSave,
+  id, isOpen, onClick, title, canSave, onNameChange, onSave, isAdded, removeFromAdded,
 }) => {
   const handleNameChange = ({ target: { value } }) => onNameChange(value);
 
   return (
-    <div className="card-header d-flex align-items-center">
+    <div className="card-header px-3 d-flex align-items-center">
       <div
         className={`${styles.iconContainer} pr-3`}
         onClick={onClick}
@@ -31,18 +31,29 @@ const SorterResultCardHeader = ({
                 className="form-control"
                 defaultValue={title}
                 onChange={handleNameChange}
+                required={true}
               />
               <SorterResultActions
                 id={id}
                 canSave={canSave}
                 onSave={onSave}
+                isAdded={isAdded}
+                removeFromAdded={removeFromAdded}
               />
             </React.Fragment>
           )
           : (
-            <span className={styles.name}>
-              {title}
-            </span>
+            <div className="d-flex justify-content-between align-items-center flex-grow-1">
+              <span className={styles.name}>
+                {title}
+              </span>
+              { canSave && (
+                <div className="d-flex align-items-center text-warning text-nowrap">
+                  <span className="d-none d-md-block">Unsaved changes</span>
+                  <Icon icon={faExclamationTriangle} className="ml-2" />
+                </div>
+              )}
+            </div>
           )
       }
     </div>
@@ -57,6 +68,8 @@ SorterResultCardHeader.propTypes = {
   canSave: PropTypes.bool,
   onNameChange: PropTypes.func,
   onSave: PropTypes.func,
+  isAdded: PropTypes.bool,
+  removeFromAdded: PropTypes.func,
 };
 
 SorterResultCardHeader.defaultProps = {
@@ -65,6 +78,8 @@ SorterResultCardHeader.defaultProps = {
   canSave: false,
   onNameChange: () => {},
   onSave: () => {},
+  isAdded: false,
+  removeFromAdded: () => {},
 };
 
 export default SorterResultCardHeader;

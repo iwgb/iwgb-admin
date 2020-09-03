@@ -1,11 +1,8 @@
 import { gql } from '@apollo/client';
 
 const getAll = gql`
-    {
-    sorterResults(sorting: {
-      field: friendlyName,
-      order: ASC,
-    }) {
+  {
+    sorterResults {
       identifier
       friendlyName
       form
@@ -43,10 +40,35 @@ const update = gql`
 `;
 
 const remove = gql`
-   mutation (
+  mutation (
     $id: ID!,
   ) {
     deleteSorterResult(id: $id)
+  }
+`;
+
+const add = gql`
+  mutation (
+    $friendlyName: String!,
+    $form: String!,
+    $question: String!,
+    $conditional: String!,
+    $plan: String!,
+  ) {
+    createSorterResult(input: {
+      friendlyName: $friendlyName,
+      form: $form,
+      question: $question,
+      conditional: $conditional,
+      plan: $plan,
+    }) {
+      identifier,
+      friendlyName,
+      form,
+      question,
+      conditional,
+      plan,
+    }
   }
 `;
 
@@ -54,4 +76,5 @@ export default {
   getAll,
   update,
   remove,
+  add,
 };

@@ -54,6 +54,7 @@ const SelectConditional = ({
       options={answers}
       value={selectedAnswer}
       onChange={onChange}
+      isSorting={false}
     />
   );
 };

@@ -8,7 +8,9 @@ import { toast } from 'react-toastify';
 import styles from './SorterResultActions.module.scss';
 import SorterResults from '../../../gql/sorterResults';
 
-const SorterResultActions = ({ id, canSave, onSave }) => {
+const SorterResultActions = ({
+  id, canSave, onSave, isAdded, removeFromAdded,
+}) => {
   const [confirmTimer, setConfirmTimer] = useState(0);
 
   const [deleteSorterResult] = useMutation(SorterResults.remove, {
@@ -26,6 +28,11 @@ const SorterResultActions = ({ id, canSave, onSave }) => {
   });
 
   const onDeleteClick = () => {
+    if (isAdded) {
+      removeFromAdded();
+      return;
+    }
+
     if (confirmTimer !== 0) {
       window.clearTimeout(confirmTimer);
       setConfirmTimer(0);
@@ -80,11 +87,15 @@ SorterResultActions.propTypes = {
   id: PropTypes.string.isRequired,
   canSave: PropTypes.bool,
   onSave: PropTypes.func,
+  isAdded: PropTypes.bool,
+  removeFromAdded: PropTypes.func,
 };
 
 SorterResultActions.defaultProps = {
   canSave: false,
   onSave: () => {},
+  isAdded: false,
+  removeFromAdded: () => {},
 };
 
 export default SorterResultActions;

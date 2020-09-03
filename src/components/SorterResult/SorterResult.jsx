@@ -11,11 +11,17 @@ import Select from '../Select/Select';
 import SelectQuestionAndConditional from './SelectQuestionAndConditional';
 import 'react-slidedown/lib/slidedown.css';
 
+const removeHiddenForms = (forms) => forms.filter(
+  ({ id }) => !process.env.REACT_APP_HIDDEN_FORM_IDS
+    .split(',')
+    .includes(id)
+);
+
 const SorterResult = ({
-  sorterResult, sorterResult: { identifier }, jobTypes, plans,
+  sorterResult, sorterResult: { identifier }, jobTypes, plans, isAdded, removeFromAdded,
 }) => {
   const [originalState, setOriginalState] = useState({});
-  const [isOpen, setOpen] = useState(false);
+  const [isOpen, setOpen] = useState(isAdded);
 
   const [friendlyName, setFriendlyName] = useState(sorterResult.friendlyName);
   const [form, setForm] = useState(sorterResult.form);
@@ -24,6 +30,19 @@ const SorterResult = ({
   const [plan, setPlan] = useState(sorterResult.plan);
 
   const [updateSorterResult] = useMutation(SorterResults.update);
+  const [addSorterResult] = useMutation(SorterResults.add, {
+    update: (cache, { data: { createSorterResult: [data] } }) => {
+      cache.writeQuery({
+        query: SorterResults.getAll,
+        data: {
+          sorterResults: [
+            ...cache.readQuery({ query: SorterResults.getAll }).sorterResults,
+            data,
+          ],
+        },
+      });
+    },
+  });
 
   const onHeaderClick = () => {
     setOpen(!isOpen);
@@ -53,13 +72,23 @@ const SorterResult = ({
     [sorterResult]);
 
   const onSave = () => {
-    updateSorterResult({
-      variables: {
-        ...currentState,
-        id: identifier,
-      },
-    })
-      .catch(() => toast(`Could not save your changes to ${friendlyName}`));
+    if (isAdded) {
+      addSorterResult({
+        variables: currentState,
+      })
+        .then(({ data: { createSorterResult: [{ identifier: createdId }] } }) => {
+          removeFromAdded(createdId);
+        })
+        .catch(() => toast('Couldn\'t create new config'));
+    } else {
+      updateSorterResult({
+        variables: {
+          ...currentState,
+          id: identifier,
+        },
+      })
+        .catch(() => toast(`Couldn't save your changes to ${friendlyName}`));
+    }
   };
 
   const canSave = !isEqual(originalState, currentState);
@@ -74,17 +103,19 @@ const SorterResult = ({
         onNameChange={setFriendlyName}
         canSave={canSave}
         onSave={onSave}
+        isAdded={isAdded}
+        removeFromAdded={removeFromAdded}
       />
       <SlideDown>
         {isOpen && (
-          <CardBody>
+          <CardBody className="px-3">
             <form>
               <div className="row">
                 <div className="col-md-4">
                   <Select
                     controlId={`${identifier}-form`}
                     label="Form"
-                    options={jobTypes}
+                    options={removeHiddenForms(jobTypes)}
                     value={form}
                     onChange={setForm}
                   />
@@ -135,11 +166,15 @@ SorterResult.propTypes = {
     id: PropTypes.string.isRequired,
     Name: PropTypes.string.isRequired,
   })),
+  isAdded: PropTypes.bool,
+  removeFromAdded: PropTypes.func,
 };
 
 SorterResult.defaultProps = {
   jobTypes: [],
   plans: [],
+  isAdded: false,
+  removeFromAdded: () => {},
 };
 
 export default SorterResult;

@@ -40,6 +40,7 @@ const SelectQuestionAndConditional = ({
           options={questions}
           value={selectedQuestionId}
           onChange={onQuestionChange}
+          isSorting={false}
         />
       </div>
       <div className="col-md-4">
