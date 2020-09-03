@@ -5,7 +5,6 @@ import { toast } from 'react-toastify';
 import { Button } from 'reactstrap';
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { clone } from 'lodash';
 import SorterResults from '../../gql/sorterResults';
 import JobTypes from '../../service/jobTypes.service';
 import Plans from '../../service/plans.service';
@@ -15,7 +14,7 @@ const SorterResultList = () => {
   const [plans, setPlans] = useState([]);
   const [jobTypes, setJobTypes] = useState([]);
   const [added, setAdded] = useState([]);
-  const [createdIds, setCreatedIds] = useState(new Set());
+  const [createdIds, setCreatedIds] = useState([]);
 
   useEffect(() => {
     JobTypes.getAll()
@@ -30,37 +29,32 @@ const SorterResultList = () => {
     toast('Could not load data');
   }
 
-  const onAdd = () => {
-    setAdded([{
-      friendlyName: 'New sort result',
-      form: jobTypes[0].id,
-      question: '',
-      conditional: '',
-      plan: plans[0].id,
-    }, ...added]);
-  };
+  const onAdd = () => setAdded([{
+    friendlyName: 'New sort result',
+    form: jobTypes[0].id,
+    question: '',
+    conditional: '',
+    plan: plans[0].id,
+  }, ...added]);
 
   const removeFromAdded = (index) => (id) => {
     setAdded(added.filter((e, i) => i !== index));
     if (id !== undefined) {
-      setCreatedIds(createdIds.add(id));
+      setCreatedIds([...createdIds, id]);
     }
   };
 
   const sortResults = (a, b) => {
-    if (
-      createdIds.has(a.identifier)
-      || a.friendlyName < b.friendlyName
-    ) {
+    if (createdIds.includes(a.identifier)) {
       return -1;
     }
-    if (b.friendlyName < a.friendlyName) {
+    if (createdIds.includes(b.identifier)) {
       return 1;
     }
-    return 0;
+    return a.friendlyName.localeCompare(b.friendlyName);
   };
 
-  const optionsLoading = jobTypes.length === 0 && plans.length === 0;
+  const optionsLoading = jobTypes.length === 0 || plans.length === 0;
 
   return (
     <div className="my-5">
@@ -106,7 +100,7 @@ const SorterResultList = () => {
                 </span>
               ))}
               {
-                clone(sorterResults)
+                [...sorterResults]
                   .sort(sortResults)
                   .map((sorterResult) => (
                     <span key={sorterResult.identifier}>

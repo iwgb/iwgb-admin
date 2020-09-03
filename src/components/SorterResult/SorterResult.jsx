@@ -91,7 +91,8 @@ const SorterResult = ({
     }
   };
 
-  const canSave = !isEqual(originalState, currentState);
+  const canSave = (isAdded || Object.keys(originalState) > 0)
+    && !isEqual(originalState, currentState);
 
   return (
     <Card className="my-2">
