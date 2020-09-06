@@ -19,6 +19,7 @@ app.get(
   passport.authenticate('basic', { session: false }),
   (req, res) => {
     const app = apps[req.params.app] || false;
+    console.log(app);
     if (app !== false) {
       res.sendFile(path.join(__dirname, 'apps', app, 'build', 'index.html'));
     } else {

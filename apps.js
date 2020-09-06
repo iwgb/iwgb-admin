@@ -1,3 +1,3 @@
 module.exports = {
-  '/onboarding-jobtypes': 'onboarding-jobtype-config',
+  'onboarding-jobtypes': 'onboarding-jobtype-config',
 };
