@@ -2,26 +2,55 @@ import React, { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import { toast } from 'react-toastify';
-import { Button } from 'reactstrap';
+import { Button, Spinner } from 'reactstrap';
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import SorterResults from '../../gql/sorterResults';
-import JobTypes from '../../service/jobTypes.service';
-import Plans from '../../service/plans.service';
-import SorterResult from '../SorterResult/SorterResult';
+import { faCheck, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { useRecoilValue } from 'recoil';
+import usePrevious from '@rooks/use-previous';
+import SorterResults from '../gql/sorterResults';
+import JobTypes from '../service/jobTypes.service';
+import Plans from '../service/plans.service';
+import SorterResult from './SorterResult/SorterResult';
+import isWorkingState from '../recoil/isWorkingState';
 
 const SorterResultList = () => {
   const [plans, setPlans] = useState([]);
   const [jobTypes, setJobTypes] = useState([]);
   const [added, setAdded] = useState([]);
   const [createdIds, setCreatedIds] = useState([]);
+  const [loadingTimeout, setLoadingTimeout] = useState(0);
+
+  const isWorking = useRecoilValue(isWorkingState);
+  const prevWorking = usePrevious(isWorking);
+
+  const isConfirming = loadingTimeout > 0;
+  const optionsLoading = jobTypes.length === 0 || plans.length === 0;
 
   useEffect(() => {
-    JobTypes.getAll()
-      .then(({ data: { items } }) => setJobTypes(items));
-    Plans.getAll()
-      .then(({ data }) => setPlans(data));
+    Promise.all([JobTypes.getAll(), Plans.getAll()])
+      .then(([
+        { data: { items: jobTypesData } },
+        { data: plansData },
+      ]) => {
+        setJobTypes(jobTypesData);
+        setPlans(plansData);
+        console.warn(plansData);
+      })
+      .catch(() => toast('Picker options failed to load - try refreshing'));
   }, []);
+
+  useEffect(() => {
+    if (
+      isWorking === false
+      && prevWorking === true
+    ) {
+      window.clearTimeout(loadingTimeout);
+      setLoadingTimeout(window.setTimeout(
+        () => setLoadingTimeout(0),
+        2000
+      ));
+    }
+  }, [isWorking]);
 
   const { loading, error, data: { sorterResults = [] } = {} } = useQuery(SorterResults.getAll);
 
@@ -54,13 +83,13 @@ const SorterResultList = () => {
     return a.friendlyName.localeCompare(b.friendlyName);
   };
 
-  const optionsLoading = jobTypes.length === 0 || plans.length === 0;
-
   return (
     <div className="my-5">
       <div className="d-flex my-3 px-3 justify-content-between align-items-center">
         <h2 className="m-0">Applicant sorter config</h2>
         <div>
+          {isWorking && <Spinner size="sm" />}
+          {isConfirming && <Icon icon={faCheck} />}
           <Button
             color="secondary"
             onClick={onAdd}

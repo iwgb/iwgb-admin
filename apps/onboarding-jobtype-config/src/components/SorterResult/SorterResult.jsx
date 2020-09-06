@@ -5,11 +5,13 @@ import SlideDown from 'react-slidedown';
 import { Card, CardBody } from 'reactstrap';
 import { isEqual } from 'lodash';
 import { toast } from 'react-toastify';
+import { useSetRecoilState } from 'recoil';
 import SorterResults from '../../gql/sorterResults';
 import SorterResultCardHeader from './CardHeader/SorterResultCardHeader';
 import Select from '../Select/Select';
 import SelectQuestionAndConditional from './SelectQuestionAndConditional';
 import 'react-slidedown/lib/slidedown.css';
+import isWorkingState from '../../recoil/isWorkingState';
 
 const removeHiddenForms = (forms) => forms.filter(
   ({ id }) => !process.env.REACT_APP_HIDDEN_FORM_IDS
@@ -28,6 +30,8 @@ const SorterResult = ({
   const [question, setQuestion] = useState(sorterResult.question);
   const [conditional, setConditional] = useState(sorterResult.conditional);
   const [plan, setPlan] = useState(sorterResult.plan);
+
+  const setIsWorking = useSetRecoilState(isWorkingState);
 
   const [updateSorterResult] = useMutation(SorterResults.update);
   const [addSorterResult] = useMutation(SorterResults.add, {
@@ -72,6 +76,7 @@ const SorterResult = ({
     [sorterResult]);
 
   const onSave = () => {
+    setIsWorking(true);
     if (isAdded) {
       addSorterResult({
         variables: currentState,
@@ -79,7 +84,8 @@ const SorterResult = ({
         .then(({ data: { createSorterResult: [{ identifier: createdId }] } }) => {
           removeFromAdded(createdId);
         })
-        .catch(() => toast('Couldn\'t create new config'));
+        .catch(() => toast('Couldn\'t create new config'))
+        .finally(() => setIsWorking(false));
     } else {
       updateSorterResult({
         variables: {
@@ -87,7 +93,8 @@ const SorterResult = ({
           id: identifier,
         },
       })
-        .catch(() => toast(`Couldn't save your changes to ${friendlyName}`));
+        .catch(() => toast(`Couldn't save your changes to ${friendlyName}`))
+        .finally(() => setIsWorking(false));
     }
   };
 

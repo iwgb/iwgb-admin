@@ -5,13 +5,16 @@ import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
 import { faCheck, faQuestionCircle, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { useMutation } from '@apollo/react-hooks';
 import { toast } from 'react-toastify';
+import { useSetRecoilState } from 'recoil';
 import styles from './SorterResultActions.module.scss';
 import SorterResults from '../../../gql/sorterResults';
+import isWorkingState from '../../../recoil/isWorkingState';
 
 const SorterResultActions = ({
   id, canSave, onSave, isAdded, removeFromAdded,
 }) => {
   const [confirmTimer, setConfirmTimer] = useState(0);
+  const setIsWorking = useSetRecoilState(isWorkingState);
 
   const [deleteSorterResult] = useMutation(SorterResults.remove, {
     update: (cache) => {
@@ -36,11 +39,11 @@ const SorterResultActions = ({
     if (confirmTimer !== 0) {
       window.clearTimeout(confirmTimer);
       setConfirmTimer(0);
+      setIsWorking(true);
 
       deleteSorterResult({ variables: { id } })
-        .catch(() => {
-          toast('Error saving your changes');
-        });
+        .catch(() => toast('Error saving your changes'))
+        .finally(() => setIsWorking(false));
       return;
     }
 
