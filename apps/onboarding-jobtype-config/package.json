@@ -2,6 +2,7 @@
   "name": "iwgb-onboarding-jobtype-config",
   "version": "0.1.0",
   "private": true,
+  "homepage": "/onboarding-jobtypes",
   "dependencies": {
     "@apollo/client": "^3.1.4",
     "@apollo/react-hooks": "^3.1.5",

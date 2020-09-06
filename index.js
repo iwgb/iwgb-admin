@@ -14,16 +14,18 @@ passport.use(new BasicStrategy({}, (username, password, done) => done(
       : false
 )));
 
-app.use(passport.authenticate('basic', { session: false }));
-
-app.get('/:app/*', (req, res) => {
-  const app = apps[req.params.app] || false;
-  if (app !== false) {
-    res.sendFile(path.join(__dirname, 'apps', app, 'build', 'index.html'));
-  } else {
-    res.sendStatus(404);
+app.get(
+  '/:app/*',
+  passport.authenticate('basic', { session: false }),
+  (req, res) => {
+    const app = apps[req.params.app] || false;
+    if (app !== false) {
+      res.sendFile(path.join(__dirname, 'apps', app, 'build', 'index.html'));
+    } else {
+      res.sendStatus(404);
+    }
   }
-});
+);
 
 app.listen(port, () => {
   console.log(`Listening on localhost:${port}`);
