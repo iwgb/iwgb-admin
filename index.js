@@ -14,8 +14,12 @@ passport.use(new BasicStrategy({}, (username, password, done) => done(
       : false
 )));
 
+Object.values(apps).forEach((appDirectory) => {
+  app.use(express.static(path.join(__dirname, 'apps', appDirectory)));
+});
+
 app.get(
-  '/:app/*',
+  '/:app',
   passport.authenticate('basic', { session: false }),
   (req, res) => {
     const app = apps[req.params.app] || false;
