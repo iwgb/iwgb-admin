@@ -15,7 +15,7 @@ passport.use(new BasicStrategy({}, (username, password, done) => done(
 )));
 
 Object.values(apps).forEach((appDirectory) => {
-  app.use(express.static(path.join(__dirname, 'apps', appDirectory)));
+  app.use(express.static(path.join(__dirname, 'apps', appDirectory, 'build')));
 });
 
 app.get(
@@ -23,7 +23,6 @@ app.get(
   passport.authenticate('basic', { session: false }),
   (req, res) => {
     const app = apps[req.params.app] || false;
-    console.log(app);
     if (app !== false) {
       res.sendFile(path.join(__dirname, 'apps', app, 'build', 'index.html'));
     } else {
