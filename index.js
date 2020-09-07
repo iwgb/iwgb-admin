@@ -15,7 +15,11 @@ passport.use(new BasicStrategy({}, (username, password, done) => done(
 )));
 
 Object.keys(apps).forEach((appName) => {
-  app.use(`/${appName}`, express.static(path.join(__dirname, 'apps', apps[appName], 'build')));
+  app.use(
+    `/${appName}`,
+    passport.authenticate('basic', { session: false }),
+    express.static(path.join(__dirname, 'apps', apps[appName], 'build'))
+  );
 });
 
 Object.keys(apps).forEach((appName) => {
