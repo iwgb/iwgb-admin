@@ -33,7 +33,22 @@ const SorterResult = ({
 
   const setIsWorking = useSetRecoilState(isWorkingState);
 
-  const [updateSorterResult] = useMutation(SorterResults.update);
+  const [updateSorterResult] = useMutation(SorterResults.update, {
+    update: (cache, { data: { updateSorterResult: [data] } }) => {
+      cache.writeQuery({
+        query: SorterResults.getAll,
+        data: {
+          sorterResults: [
+            ...cache.readQuery({ query: SorterResults.getAll })
+              .sorterResults
+              .filter(({ identifier: id }) => id !== identifier),
+            data,
+          ],
+        },
+      });
+    },
+  });
+
   const [addSorterResult] = useMutation(SorterResults.add, {
     update: (cache, { data: { createSorterResult: [data] } }) => {
       cache.writeQuery({
