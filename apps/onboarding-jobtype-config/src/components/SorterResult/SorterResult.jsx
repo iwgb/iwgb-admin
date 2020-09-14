@@ -98,7 +98,7 @@ const SorterResult = ({
     }
   };
 
-  const canSave = (isAdded || Object.keys(originalState) > 0)
+  const canSave = (isAdded || Object.keys(originalState).length > 0)
     && !isEqual(originalState, currentState);
 
   return (
