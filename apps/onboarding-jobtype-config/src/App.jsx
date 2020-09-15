@@ -4,7 +4,7 @@ import { ToastContainer } from 'react-toastify';
 import { RecoilRoot } from 'recoil';
 import { Helmet } from 'react-helmet';
 import client from './helpers/apollo';
-import SorterResultList from './components/SorterResultList';
+import SorterResultList from './components/SorterResultList/SorterResultList';
 import 'react-toastify/dist/ReactToastify.css';
 import './App.scss';
 
