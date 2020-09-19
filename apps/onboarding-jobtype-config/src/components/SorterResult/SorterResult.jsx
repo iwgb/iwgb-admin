@@ -12,6 +12,7 @@ import Select from '../Select/Select';
 import SelectQuestionAndConditional from './SelectQuestionAndConditional';
 import 'react-slidedown/lib/slidedown.css';
 import isWorkingState from '../../recoil/isWorkingState';
+import unprovisionedChangesState from '../../recoil/unprovisionedChangesState';
 
 const removeHiddenForms = (forms) => forms.filter(
   ({ id }) => !process.env.REACT_APP_HIDDEN_FORM_IDS
@@ -31,7 +32,8 @@ const SorterResult = ({
   const [conditional, setConditional] = useState(sorterResult.conditional);
   const [plan, setPlan] = useState(sorterResult.plan);
 
-  const setIsWorking = useSetRecoilState(isWorkingState);
+  const setWorking = useSetRecoilState(isWorkingState);
+  const setUnprovisionedChanges = useSetRecoilState(unprovisionedChangesState);
 
   const [updateSorterResult] = useMutation(SorterResults.update, {
     update: (cache, { data: { updateSorterResult: [data] } }) => {
@@ -47,6 +49,7 @@ const SorterResult = ({
         },
       });
     },
+    onCompleted: () => setUnprovisionedChanges(true),
   });
 
   const [addSorterResult] = useMutation(SorterResults.add, {
@@ -61,6 +64,7 @@ const SorterResult = ({
         },
       });
     },
+    onCompleted: () => setUnprovisionedChanges(true),
   });
 
   const onHeaderClick = () => {
@@ -91,7 +95,7 @@ const SorterResult = ({
     [sorterResult]);
 
   const onSave = () => {
-    setIsWorking(true);
+    setWorking(true);
     if (isAdded) {
       addSorterResult({
         variables: currentState,
@@ -100,7 +104,7 @@ const SorterResult = ({
           removeFromAdded(createdId);
         })
         .catch(() => toast('Couldn\'t create new config'))
-        .finally(() => setIsWorking(false));
+        .finally(() => setWorking(false));
     } else {
       updateSorterResult({
         variables: {
@@ -109,7 +113,7 @@ const SorterResult = ({
         },
       })
         .catch(() => toast(`Couldn't save your changes to ${friendlyName}`))
-        .finally(() => setIsWorking(false));
+        .finally(() => setWorking(false));
     }
   };
 

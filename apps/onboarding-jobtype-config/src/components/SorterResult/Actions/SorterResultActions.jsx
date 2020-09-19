@@ -9,12 +9,14 @@ import { useSetRecoilState } from 'recoil';
 import styles from './SorterResultActions.module.scss';
 import SorterResults from '../../../gql/sorterResults';
 import isWorkingState from '../../../recoil/isWorkingState';
+import unprovisionedChangesState from '../../../recoil/unprovisionedChangesState';
 
 const SorterResultActions = ({
   id, canSave, onSave, isAdded, removeFromAdded,
 }) => {
   const [confirmTimer, setConfirmTimer] = useState(0);
   const setIsWorking = useSetRecoilState(isWorkingState);
+  const setUnprovisionedChanges = useSetRecoilState(unprovisionedChangesState);
 
   const [deleteSorterResult] = useMutation(SorterResults.remove, {
     update: (cache) => {
@@ -28,6 +30,7 @@ const SorterResultActions = ({
         },
       });
     },
+    onCompleted: () => setUnprovisionedChanges(true),
   });
 
   const onDeleteClick = () => {

@@ -6,6 +6,7 @@ import { faCheck, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { useRecoilValue } from 'recoil';
 import usePrevious from '@rooks/use-previous';
 import isWorkingState from '../../recoil/isWorkingState';
+import ProvisionAction from './ProvisionAction/ProvisionAction';
 
 const SorterResultListActions = ({ onAdd, isAddEnabled }) => {
   const [loadingTimeout, setLoadingTimeout] = useState(0);
@@ -43,6 +44,7 @@ const SorterResultListActions = ({ onAdd, isAddEnabled }) => {
         />
         <span className="ml-2">Add</span>
       </Button>
+      <ProvisionAction />
     </div>
   );
 };

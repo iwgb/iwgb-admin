@@ -3,7 +3,7 @@ import { InMemoryCache } from '@apollo/client';
 import { API_BASE_URL, REQUEST_CONFIG } from '../constants/api.constants';
 
 const apollo = new ApolloClient({
-  uri: `${API_BASE_URL}/graphql`,
+  uri: `${API_BASE_URL}/onboarding/graphql`,
   ...REQUEST_CONFIG,
   cache: new InMemoryCache({
     typePolicies: {
