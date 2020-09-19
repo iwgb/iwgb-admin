@@ -29,14 +29,14 @@ const SorterResultListActions = ({ onAdd, isAddEnabled }) => {
   }, [isWorking]);
 
   return (
-    <div className="d-flex align-items-center">
+    <div className="d-flex align-items-center flex-row-reverse flex-sm-row">
       {isWorking && <Spinner size="sm" />}
       {isConfirming && <Icon icon={faCheck} />}
       <Button
         color="secondary"
         onClick={onAdd}
         disabled={!isAddEnabled}
-        className="text-nowrap ml-3"
+        className="text-nowrap ml-sm-3 mr-3 mr-sm-0"
       >
         <Icon
           icon={faPlus}

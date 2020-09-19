@@ -60,12 +60,16 @@ const SorterResultList = () => {
 
   return (
     <div className="my-5">
-      <div className="d-flex my-3 px-3 justify-content-between align-items-center">
-        <h2 className="m-0">Applicant sorter config</h2>
-        <SorterResultListActions
-          onAdd={onAdd}
-          isAddEnabled={!optionsLoading}
-        />
+      <div className="row my-3 px-sm-3 justify-content-between align-items-center">
+        <div className="col-xs-12 col-sm-6 col-md-8 my-3 my-sm-0">
+          <h2 className="m-0">Applicant sorter config</h2>
+        </div>
+        <div className="col-xs-12 col-sm-6 col-md-4 d-flex justify-content-sm-end">
+          <SorterResultListActions
+            onAdd={onAdd}
+            isAddEnabled={!optionsLoading}
+          />
+        </div>
       </div>
       {
         loading

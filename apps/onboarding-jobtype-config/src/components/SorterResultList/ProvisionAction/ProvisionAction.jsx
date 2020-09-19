@@ -28,7 +28,7 @@ const ProvisionAction = () => {
   };
 
   return (
-    <ButtonGroup className="ml-2">
+    <ButtonGroup className="mr-2 mr-sm-0 ml-sm-2">
       <Button
         disabled={isWorking || !areUnprovisionedChanges}
         onClick={onClick}
