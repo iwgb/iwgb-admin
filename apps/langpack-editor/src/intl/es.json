@@ -1,0 +1,18 @@
+{
+  "header.languageLabel": "Lenguaje UI",
+  "header.title": "El editor de Langpack",
+  "langpack.branches": "Ramas",
+  "langpack.contact": "Contacto",
+  "langpack.error": "Error",
+  "langpack.feed": "Noticias",
+  "langpack.footer": "Pie de página",
+  "langpack.global": "Global",
+  "langpack.home": "Inicio",
+  "langpack.join": "Únete a",
+  "langpack.maintenance": "Mantenimiento",
+  "langpack.nav": "Navegación",
+  "langpack.notFound": "No encontrada",
+  "langpack.office": "Oficina",
+  "langpack.page": "Página",
+  "langpack.post": "Publicación"
+}

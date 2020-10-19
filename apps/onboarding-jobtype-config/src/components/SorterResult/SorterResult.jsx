@@ -15,7 +15,7 @@ import isWorkingState from '../../recoil/isWorkingState';
 import unprovisionedChangesState from '../../recoil/unprovisionedChangesState';
 
 const removeHiddenForms = (forms) => forms.filter(
-  ({ id }) => !process.env.REACT_APP_HIDDEN_FORM_IDS
+  ({ id }) => !process.env.REACT_APP_ONBOARDING_JOBTYPE_HIDDEN_FORM_IDS
     .split(',')
     .includes(id)
 );

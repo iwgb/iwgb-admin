@@ -1,0 +1,49 @@
+{
+  "name": "iwgb-langpack-editor",
+  "version": "0.1.0",
+  "private": true,
+  "homepage": "/langpack-editor",
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.30",
+    "@fortawesome/free-solid-svg-icons": "^5.14.0",
+    "@fortawesome/react-fontawesome": "^0.1.11",
+    "@types/react": "^16.9.49",
+    "axios": "^0.19.2",
+    "bootstrap": "^4.5.2",
+    "iso-language-codes": "^1.0.7",
+    "lodash": "^4.17.20",
+    "node-sass": "^4.14.1",
+    "prop-types": "^15.7.2",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-helmet": "^6.1.0",
+    "react-intl": "^5.8.6",
+    "react-loading-skeleton": "^2.1.1",
+    "react-scripts": "3.4.3",
+    "react-slidedown": "^2.4.5",
+    "react-toastify": "^6.0.8",
+    "reactstrap": "^8.5.1",
+    "recoil": "0.0.13"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build"
+  },
+  "browserslist": {
+    "production": [
+      "last 2 versions",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "eslint": "^6.0.0",
+    "eslint-config-amex": "12.0.3",
+    "eslint-plugin-react-hooks": "^1.7.0"
+  }
+}

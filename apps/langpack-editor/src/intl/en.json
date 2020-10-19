@@ -1,0 +1,18 @@
+{
+  "header.languageLabel": "UI language",
+  "header.title": "Langpack editor",
+  "langpack.branches": "Branches",
+  "langpack.contact": "Contact",
+  "langpack.error": "Error",
+  "langpack.feed": "Feed",
+  "langpack.footer": "Footer",
+  "langpack.global": "Global",
+  "langpack.home": "Home",
+  "langpack.join": "Join",
+  "langpack.maintenance": "Maintenance",
+  "langpack.nav": "Nav",
+  "langpack.notFound": "Not found",
+  "langpack.office": "Office",
+  "langpack.page": "Page",
+  "langpack.post": "Post"
+}
