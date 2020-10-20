@@ -1,0 +1,8 @@
+@import 'src/utils/utils';
+
+ .label {
+   @include media-breakpoint-down(xs) {
+     padding-left: 2rem;
+     font-weight: 500;
+   }
+ }

@@ -1,6 +1,8 @@
 {
-  "header.languageLabel": "UI language",
+  "header.uiLocalePicker": "UI language",
+  "header.secondLanguagePicker": "Translating to",
   "header.title": "Langpack editor",
+  "keyColumnHeading": "Key",
   "langpack.branches": "Branches",
   "langpack.contact": "Contact",
   "langpack.error": "Error",
@@ -14,5 +16,8 @@
   "langpack.notFound": "Not found",
   "langpack.office": "Office",
   "langpack.page": "Page",
-  "langpack.post": "Post"
+  "langpack.post": "Post",
+  "provisionButton": "Provision changes",
+  "status.preparing": "Preparing",
+  "status.provisioning": "Provisioning"
 }

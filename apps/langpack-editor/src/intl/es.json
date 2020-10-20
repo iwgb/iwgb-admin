@@ -1,6 +1,8 @@
 {
-  "header.languageLabel": "Lenguaje UI",
-  "header.title": "El editor de Langpack",
+  "header.uiLocalePicker": "Lenguaje UI",
+  "header.secondLanguagePicker": "Traduciendo al",
+  "header.title": "El editor de langpack",
+  "keyColumnHeading": "Clave",
   "langpack.branches": "Ramas",
   "langpack.contact": "Contacto",
   "langpack.error": "Error",
@@ -14,5 +16,8 @@
   "langpack.notFound": "No encontrada",
   "langpack.office": "Oficina",
   "langpack.page": "Página",
-  "langpack.post": "Publicación"
+  "langpack.post": "Publicación",
+  "provisionButton": "Aprovisionar mis cambios",
+  "status.preparing": "Preparando",
+  "status.provisioning": "Aprovisionamiento"
 }

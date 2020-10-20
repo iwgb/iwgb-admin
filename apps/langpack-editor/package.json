@@ -10,6 +10,7 @@
     "@types/react": "^16.9.49",
     "axios": "^0.19.2",
     "bootstrap": "^4.5.2",
+    "formik": "^2.2.0",
     "iso-language-codes": "^1.0.7",
     "lodash": "^4.17.20",
     "node-sass": "^4.14.1",

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Card } from 'reactstrap';
 import SlideDown from 'react-slidedown';
@@ -8,8 +8,11 @@ import LangpackBody from './LangpackBody/LangpackBody';
 
 const Langpack = ({ name, languages }) => {
   const [isOpen, setOpen] = useState(false);
+  const [status, setStatus] = useState('');
 
   const onHeaderClick = () => setOpen(!isOpen);
+
+  const formRef = useRef(null);
 
   return (
     <Card className="my-2">
@@ -17,12 +20,16 @@ const Langpack = ({ name, languages }) => {
         title={name}
         onClick={onHeaderClick}
         isOpen={isOpen}
+        status={status}
+        formRef={formRef}
       />
       <SlideDown>
         {isOpen && (
           <LangpackBody
             languages={languages}
             name={name}
+            setStatus={setStatus}
+            formRef={formRef}
           />
         )}
       </SlideDown>

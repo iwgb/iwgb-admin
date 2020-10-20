@@ -1,40 +1,28 @@
 import React from 'react';
 import { useRecoilState } from 'recoil';
-import { FormattedMessage } from 'react-intl';
-import localeState from '../../recoil/localeState';
-import { AVAILABLE_LOCALES } from '../../constants/i18n';
-import getNativeName from '../../utils/getNativeName';
+import { secondLanguageState, uiLocaleState } from '../../recoil/localeState';
+import LocalePicker from './LocalePicker';
+import { DEFAULT_LOCALE } from '../../constants/i18n';
 
 const LangpackListActions = () => {
-  const [locale, setLocale] = useRecoilState(localeState);
-
-  const onChange = ({ target: { value } }) => setLocale(value);
+  const [uiLocale, setUiLocale] = useRecoilState(uiLocaleState);
+  const [secondLanguage, setSecondLanguage] = useRecoilState(secondLanguageState);
 
   return (
-    <div className="d-flex align-items-center">
-      {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-      <label
-        className="m-0 text-nowrap mr-2"
-        htmlFor="locale-picker"
-      >
-        <FormattedMessage id="header.languageLabel" />
-      </label>
-      <select
-        id="locale-picker"
-        className="custom-select"
-        value={locale}
-        onChange={onChange}
-      >
-        {AVAILABLE_LOCALES.map((localeCode) => (
-          <option
-            key={localeCode}
-            value={localeCode}
-          >
-            {getNativeName(localeCode)}
-          </option>
-        ))}
-      </select>
-    </div>
+    <React.Fragment>
+      <LocalePicker
+        id="header.uiLocalePicker"
+        value={uiLocale}
+        onChange={({ target: { value } }) => setUiLocale(value)}
+      />
+      <LocalePicker
+        id="header.secondLanguagePicker"
+        value={secondLanguage}
+        onChange={({ target: { value } }) => setSecondLanguage(value)}
+        exclude={[DEFAULT_LOCALE]}
+      />
+    </React.Fragment>
+
   );
 };
 

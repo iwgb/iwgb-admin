@@ -1,9 +1,12 @@
 import { atom } from 'recoil';
-import { DEFAULT_LOCALE } from '../constants/i18n';
+import { DEFAULT_LOCALE, DEFAULT_SECOND_LANGUAGE } from '../constants/i18n';
 
-const localeState = atom({
-  key: 'language',
+export const uiLocaleState = atom({
+  key: 'uiLocale',
   default: DEFAULT_LOCALE,
 });
 
-export default localeState;
+export const secondLanguageState = atom({
+  key: 'secondLanguage',
+  default: DEFAULT_SECOND_LANGUAGE,
+});
