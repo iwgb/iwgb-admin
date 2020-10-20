@@ -1,7 +1,10 @@
 {
-  "header.uiLocalePicker": "UI language",
+  "error.langpackList": "Failed to load the list of langpacks",
+  "error.langpackLoad": "Failed to load the {name} langpack",
+  "error.provision": "Some or all langpacks failed to provision",
   "header.secondLanguagePicker": "Translating to",
   "header.title": "Langpack editor",
+  "header.uiLocalePicker": "UI language",
   "keyColumnHeading": "Key",
   "langpack.branches": "Branches",
   "langpack.contact": "Contact",
@@ -18,6 +21,6 @@
   "langpack.page": "Page",
   "langpack.post": "Post",
   "provisionButton": "Provision changes",
-  "status.preparing": "Preparing",
+  "status.complete": "Done",
   "status.provisioning": "Provisioning"
 }

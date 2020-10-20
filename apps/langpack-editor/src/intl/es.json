@@ -1,7 +1,10 @@
 {
-  "header.uiLocalePicker": "Lenguaje UI",
+  "error.langpackList": "No se cargó la lista de langpacks",
+  "error.langpackLoad": "No cargaron el langpack de {name}",
+  "error.provision": "Algunos o todos los langpacks fallidos no pudieron ser aprovisionados",
   "header.secondLanguagePicker": "Traduciendo al",
   "header.title": "El editor de langpack",
+  "header.uiLocalePicker": "Lenguaje UI",
   "keyColumnHeading": "Clave",
   "langpack.branches": "Ramas",
   "langpack.contact": "Contacto",
@@ -18,6 +21,6 @@
   "langpack.page": "Página",
   "langpack.post": "Publicación",
   "provisionButton": "Aprovisionar mis cambios",
-  "status.preparing": "Preparando",
+  "status.complete": "Completa",
   "status.provisioning": "Aprovisionamiento"
 }

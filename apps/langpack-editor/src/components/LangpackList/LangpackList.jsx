@@ -25,7 +25,7 @@ const LangpackList = () => {
           };
         }, {}));
       })
-      .catch(() => toast('Failed to load the list of langpacks'));
+      .catch(() => toast(<FormattedMessage id="error.langpackList" />));
   }, []);
 
   return (

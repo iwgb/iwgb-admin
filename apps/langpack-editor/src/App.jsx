@@ -1,5 +1,4 @@
 import React from 'react';
-import { ToastContainer } from 'react-toastify';
 import { Helmet } from 'react-helmet';
 import 'react-toastify/dist/ReactToastify.css';
 import './App.scss';
@@ -22,7 +21,6 @@ const App = () => (
     <RecoilRoot>
       <LangpackEditor />
     </RecoilRoot>
-    <ToastContainer position="bottom-left" />
   </div>
 );
 

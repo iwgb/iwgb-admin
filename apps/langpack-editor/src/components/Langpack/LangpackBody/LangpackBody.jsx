@@ -12,13 +12,19 @@ import LangpackKey from '../LangpackKey/LangpackKey';
 import { DEFAULT_LOCALE } from '../../../constants/i18n';
 import getNativeName from '../../../utils/getNativeName';
 import { secondLanguageState } from '../../../recoil/localeState';
-import { IDLE, PREPARING, PROVISIONING } from '../../../constants/status';
+import { S3_PRESIGNED_REQUEST_CONFIG } from '../../../constants/api';
 
 const PROCESSED_DEFAULT_LOCALE = 0;
 const PROCESSED_SECOND_LANG = 1;
 
+const INTL_KEY_SEPARATOR = '.';
+const FORMIK_KEY_SEPARATOR = '_';
+
+const intlToFormikKey = (key) => key.replace(INTL_KEY_SEPARATOR, FORMIK_KEY_SEPARATOR);
+const formikToIntlKey = (key) => key.replace(FORMIK_KEY_SEPARATOR, INTL_KEY_SEPARATOR);
+
 const LangpackBody = ({
-  name, languages, setStatus, formRef,
+  name, languages, setProvisioning, formRef,
 }) => {
   const [langpack, setLangpack] = useState(null);
   const secondLanguage = useRecoilValue(secondLanguageState);
@@ -32,26 +38,60 @@ const LangpackBody = ({
         const masterLangpack = langpacks[masterLangpackIndex];
 
         Object.keys(masterLangpack.data).forEach((key) => {
-          const parsedKey = key.replace('.', '_');
-          parsedLangpack[parsedKey] = { [DEFAULT_LOCALE]: masterLangpack.data[key] };
+          parsedLangpack[intlToFormikKey(key)] = { [DEFAULT_LOCALE]: masterLangpack.data[key] };
         });
 
         Object.keys(parsedLangpack).forEach((key) => {
-          const rawKey = key.replace('_', '.');
-          langpacks
-            .forEach(({ data }, i) => {
-              if (i !== masterLangpackIndex) {
-                parsedLangpack[key][languages[i].language] = data[rawKey] || '';
-              }
-            });
+          langpacks.forEach(({ data }, i) => {
+            if (i !== masterLangpackIndex) {
+              parsedLangpack[key][languages[i].language] = data[formikToIntlKey(key)] || '';
+            }
+          });
         });
 
         setLangpack(parsedLangpack);
       })
-      .catch(() => toast(`Failed to load ${name}`));
-  }, []);
+      .catch(() => toast(
+        <FormattedMessage
+          id="error.langpackLoad"
+          values={{ name }}
+        />
+      ));
+  }, [languages, name]);
 
-  const onSubmit = () => {};
+  const uploadToS3 = ({ data: { uploadUrl } }, data) => http
+    .put(uploadUrl, JSON.stringify(data), S3_PRESIGNED_REQUEST_CONFIG);
+
+  const onError = () => {
+    setProvisioning(false);
+    toast(<FormattedMessage id="error.provision" />);
+  };
+
+  const onSubmit = (values) => {
+    setProvisioning(true);
+    const processedLangpacks = Object.keys(values)
+      .reduce((keysByLanguage, key) => ({
+        [PROCESSED_DEFAULT_LOCALE]: {
+          ...keysByLanguage[PROCESSED_DEFAULT_LOCALE],
+          [formikToIntlKey(key)]: values[key][DEFAULT_LOCALE],
+        },
+        [PROCESSED_SECOND_LANG]: {
+          ...keysByLanguage[PROCESSED_SECOND_LANG],
+          [formikToIntlKey(key)]: values[key][secondLanguage],
+        },
+      }), {});
+
+    Promise.all([
+      api.get(`/${name}/${DEFAULT_LOCALE}/put`),
+      api.get(`/${name}/${secondLanguage}/put`),
+    ])
+      .then((uploadUrls) => {
+        Promise.all(uploadUrls.map((response, i) => uploadToS3(response, processedLangpacks[i])))
+          .then(() => setProvisioning(false))
+          .catch(onError);
+      })
+      .catch(onError);
+  };
 
   return (
     <CardBody className="px-3">
@@ -113,11 +153,11 @@ LangpackBody.propTypes = {
     PropTypes.func,
     PropTypes.shape({ current: PropTypes.node }),
   ]).isRequired,
-  setStatus: PropTypes.func,
+  setProvisioning: PropTypes.func,
 };
 
 LangpackBody.propTypes = {
-  setStatus: () => {},
+  setProvisioning: () => {},
 };
 
 export default LangpackBody;

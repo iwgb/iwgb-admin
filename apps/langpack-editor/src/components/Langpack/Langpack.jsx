@@ -8,7 +8,7 @@ import LangpackBody from './LangpackBody/LangpackBody';
 
 const Langpack = ({ name, languages }) => {
   const [isOpen, setOpen] = useState(false);
-  const [status, setStatus] = useState('');
+  const [isProvisioning, setProvisioning] = useState(false);
 
   const onHeaderClick = () => setOpen(!isOpen);
 
@@ -20,7 +20,7 @@ const Langpack = ({ name, languages }) => {
         title={name}
         onClick={onHeaderClick}
         isOpen={isOpen}
-        status={status}
+        isProvisioning={isProvisioning}
         formRef={formRef}
       />
       <SlideDown>
@@ -28,7 +28,7 @@ const Langpack = ({ name, languages }) => {
           <LangpackBody
             languages={languages}
             name={name}
-            setStatus={setStatus}
+            setProvisioning={setProvisioning}
             formRef={formRef}
           />
         )}
