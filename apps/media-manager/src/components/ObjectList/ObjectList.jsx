@@ -47,7 +47,7 @@ const ObjectList = () => {
   }
 
   if (error || isError) {
-    return <ObjectListLoadFailed messageid="error.loadFailed" />;
+    return <ObjectListLoadFailed />;
   }
 
   return (
