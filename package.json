@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "npm i && cd apps/onboarding-jobtype-config && npm i && npm run build && cd ../langpack-editor && npm i && npm run build",
+    "build": "npm i && cd apps/onboarding-jobtype-config && npm i && npm run build && cd ../langpack-editor && npm i && npm run build && cd ../media-manager && npm i && npm run build",
     "serve": "node index.js"
   },
   "repository": {
