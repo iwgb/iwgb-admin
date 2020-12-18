@@ -24,7 +24,7 @@ Object.keys(apps).forEach((appName) => {
 
 Object.keys(apps).forEach((appName) => {
   app.get(
-    `/${appName}`,
+    `/${appName}/*`,
     passport.authenticate('basic', { session: false }),
     (req, res) => {
       res.sendFile(path.join(__dirname, 'apps', apps[appName], 'build', 'index.html'));
