@@ -1,0 +1,16 @@
+{
+  "confirmDelete": "Sure?",
+  "copyLink": "Copy link",
+  "copyShortlink": "Copy shortlink",
+  "defaultDirectory": "Media",
+  "delete": "Delete",
+  "error.delete": "An error occurred while deleting the file.",
+  "error.loadFailed": "Failed to fetch file list.",
+  "error.upload": "An error occurred during creation of the file or folder.",
+  "language": "Language",
+  "newFolder": "New folder",
+  "refresh": "Refresh",
+  "uploadButton": "Upload",
+  "uploadDesktop": "Drop a file here, or click to browse",
+  "uploadMobile": "Tap to add a file"
+}

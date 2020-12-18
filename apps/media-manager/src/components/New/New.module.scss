@@ -1,0 +1,53 @@
+@import 'src/utils/utils';
+
+.new {
+  border: .125rem dashed $gray-400;
+  border-radius: $border-radius;
+}
+
+.newFolder {
+  padding: .74rem;
+}
+
+.newFolderInput {
+  outline: none;
+  border: none;
+  border-bottom: 2px solid $gray-400;
+  min-width: 0;
+}
+
+.newFile {
+  min-height: $file-min-height;
+}
+
+.drop {
+  border: $border-width solid $border-color;
+  border-radius: $border-radius;
+  background-color: $gray-100;
+  transition: border-color .2s;
+}
+
+.accept {
+  border-color: $primary;
+}
+
+.upload {
+  font-size: $font-size-sm;
+}
+
+.clear {
+  justify-self: flex-start;
+}
+
+.clearButton {
+  background-color: transparentize($secondary, 1);
+  color: $secondary;
+  border-width: 0;
+  margin-top: -.5rem;
+  margin-right: -.5rem;
+
+  &:hover {
+    color: $white;
+  }
+}
+

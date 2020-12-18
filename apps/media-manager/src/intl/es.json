@@ -1,0 +1,17 @@
+{
+  "confirmDelete": "¿Seguro?",
+  "copyLink": "Copiar enlace",
+  "copyShortlink": "Copia el enlace corto",
+  "defaultDirectory": "Ficheros",
+  "delete": "Eliminar",
+  "error.delete": "Se produjo un error al borrar el archivo.",
+  "error.loadFailed": "No se ha podido obtener la lista de archivos.",
+  "error.upload": "Se produjo un error durante la creación del archivo o la carpeta.",
+  "language": "Lenguaje",
+  "newFolder": "Nueva carpeta",
+  "refresh": "Refrescar",
+  "uploadButton": "Subir",
+  "uploadDesktop": "Suelte un archivo aquí, o haga clic para navegar",
+  "uploadMobile": "Toque para agregar un archivo"
+}
+

@@ -1,0 +1,45 @@
+@import 'src/utils/utils';
+
+.card {
+  transition: background-color .2s;
+}
+
+.cardLink {
+  color: $body-color;
+
+  &:hover {
+    color: $body-color;
+    text-decoration: none;
+
+    .card {
+      background-color: $gray-100;
+    }
+  }
+}
+
+.file {
+  min-height: $file-min-height;
+}
+
+.image {
+  background-position: center;
+  background-size: cover;
+}
+
+.cardBorder {
+  border-top-left-radius: $border-radius;
+  border-top-right-radius: $border-radius;
+}
+
+.progress {
+  height: 3px;
+  background: $white;
+}
+
+.bar {
+  transition: width .2s ease-in-out;
+}
+
+.hideProgress {
+  padding-top: calc(1.25rem - 3px);
+}

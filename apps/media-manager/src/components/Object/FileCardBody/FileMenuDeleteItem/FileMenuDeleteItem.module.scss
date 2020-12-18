@@ -1,0 +1,16 @@
+@import 'src/utils/utils';
+@use 'sass:color';
+
+.delete {
+  color: $danger;
+
+  &:hover {
+    background-color: $danger;
+    color: $white;
+  }
+
+  &:active {
+    background-color: darken($danger, 15%);
+    color: $white;
+  }
+}

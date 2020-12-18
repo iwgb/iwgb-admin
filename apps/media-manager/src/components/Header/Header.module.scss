@@ -1,0 +1,13 @@
+@import 'src/utils/utils';
+@use 'sass:color';
+
+.title {
+  font-size: 8rem;
+  font-weight: 900;
+  line-height: .9;
+}
+
+.back {
+  z-index: $zindex-sticky;
+  background-color: transparentize($gray-100, 1);
+}
