@@ -25,4 +25,5 @@
 .back {
   z-index: $zindex-sticky;
   background-color: transparentize($gray-100, 1);
+  border: none;
 }
