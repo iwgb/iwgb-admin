@@ -9,6 +9,7 @@
   "error.upload": "Se produjo un error durante la creación del archivo o la carpeta.",
   "language": "Lenguaje",
   "newFolder": "Nueva carpeta",
+  "publicWarning": "Todos los archivos son públicos",
   "refresh": "Refrescar",
   "uploadButton": "Subir",
   "uploadDesktop": "Suelte un archivo aquí, o haga clic para navegar",

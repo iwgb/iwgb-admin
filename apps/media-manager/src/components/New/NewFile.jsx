@@ -123,6 +123,9 @@ const NewFile = () => {
             <FormattedMessage id="uploadButton" />
           </Button>
         </div>
+        <small className={`${styles.publicWarning} text-center text-muted mt-1`}>
+          <FormattedMessage id="publicWarning" />
+        </small>
       </div>
     </div>
   );

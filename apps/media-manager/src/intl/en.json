@@ -9,6 +9,7 @@
   "error.upload": "An error occurred during creation of the file or folder.",
   "language": "Language",
   "newFolder": "New folder",
+  "publicWarning": "All files are public",
   "refresh": "Refresh",
   "uploadButton": "Upload",
   "uploadDesktop": "Drop a file here, or click to browse",
